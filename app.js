@@ -15,7 +15,8 @@ app.get("/", welcome);
 
 const movieHandlers = require("./movieHandlers");
 const usersHandlers = require("./usersHandlers.js");
-
+const { validateMovie } = require("./validator.js");
+const { validateUser } = require("./validator.js");
 
 app.get("/api/movies", movieHandlers.getMovies);
 app.get("/api/movies/:id", movieHandlers.getMovieById);
@@ -27,6 +28,13 @@ app.post("/api/users", usersHandlers.postUser);
 
 app.put("/api/movies/:id", movieHandlers.updateMovie);
 app.put("/api/users/:id", usersHandlers.updateUser);
+
+app.post("/api/movies", validateMovie, movieHandlers.postMovie);
+app.put("/api/movies/:id", validateMovie, movieHandlers.updateMovie);
+
+app.post("/api/users", validateUser, usersHandlers.postUser);
+app.put("/api/users/:id", validateUser, usersHandlers.updateUser);
+
 
 app.listen(port, (err) => {
   if (err) {
