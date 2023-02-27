@@ -22,17 +22,19 @@ const { validateUser } = require("./validator.js")
 const { hashPassword, verifyPassword, verifyToken } = require("./auth")
 
 //the public routes -----------
-app.post(
-  "/api/login",
-  usersHandlers.getUserByEmailWithPasswordAndPassToNext,
-  verifyPassword
-)
+
 app.get("/api/movies", movieHandlers.getMovies)
 app.get("/api/movies/:id", movieHandlers.getMovieById)
 app.get("/api/users", usersHandlers.getUsers)
 app.get("/api/users/:id", usersHandlers.getUserById)
 
 app.post("/api/users", validateUser, hashPassword, usersHandlers.postUser)
+
+app.post(
+  "/api/login",
+  usersHandlers.getUserByEmailWithPasswordAndPassToNext,
+  verifyPassword
+)
 
 //then the routes to protect
 app.use(verifyToken)
