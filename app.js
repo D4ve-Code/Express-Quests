@@ -32,6 +32,8 @@ app.get("/api/movies/:id", movieHandlers.getMovieById)
 app.get("/api/users", usersHandlers.getUsers)
 app.get("/api/users/:id", usersHandlers.getUserById)
 
+app.post("/api/users", validateUser, hashPassword, usersHandlers.postUser)
+
 //then the routes to protect
 app.use(verifyToken)
 
@@ -45,7 +47,6 @@ app.put("/api/movies/:id", validateMovie, movieHandlers.updateMovie)
 app.delete("/api/movies/:id", movieHandlers.deleteMovie)
 app.delete("/api/users/:id", usersHandlers.deleteUser)
 
-app.post("/api/users", validateUser, hashPassword, usersHandlers.postUser)
 app.put("/api/users/:id", validateUser, hashPassword, usersHandlers.updateUser)
 
 app.listen(port, (err) => {
